@@ -1,0 +1,13 @@
+{
+    "outline.problems.enabled": true,
+    "outline.problems.badges": true,
+    "outline.problems.colors": true,
+    "problems.autoReveal": true,
+    "problems.decorations.enabled": true,
+    "problems.visibility": true,
+    "errorLens.statusBarIconsTargetProblems": "all",
+    "problems.showCurrentInStatus": true,
+    "errorLens.statusBarIconsAtZero": "removeBackground",
+    "problems.sortOrder": "severity",
+    "comments.collapseOnResolve": true
+}
