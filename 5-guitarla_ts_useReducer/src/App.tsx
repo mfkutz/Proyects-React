@@ -1,4 +1,4 @@
-import { useReducer } from "react"
+import { useReducer, useEffect } from "react"
 import Guitars from "./components/Guitar"
 import Header from "./components/Header"
 import type { Guitar } from "./types/index"
@@ -7,6 +7,10 @@ import { cartReducer, initialState } from "./reducers/cart-reducer"
 function App() {
 
   const [state, dispatch] = useReducer(cartReducer, initialState)
+
+  useEffect(() => {
+    localStorage.setItem("Cart", JSON.stringify(state.cart));
+  }, [state.cart]);
 
   return (
     <>
