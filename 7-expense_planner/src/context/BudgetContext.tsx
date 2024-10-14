@@ -6,12 +6,12 @@ type BudgetContextProps = {
     dispatch: Dispatch<BudgetActions>
 }
 
-//CONTEXT
-export const BudgetContext = createContext<BudgetContextProps>(null!)
-
 type BudgetProviderProps = {
     children: ReactNode
 }
+
+//CONTEXT
+export const BudgetContext = createContext<BudgetContextProps>(null!)
 
 //PROVIDER
 export const BudgetProvider = ({ children }: BudgetProviderProps) => {
@@ -22,7 +22,6 @@ export const BudgetProvider = ({ children }: BudgetProviderProps) => {
         <BudgetContext.Provider
             value={{ state, dispatch }}
         >
-
             {children}
         </BudgetContext.Provider>
     )
