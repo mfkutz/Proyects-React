@@ -1,9 +1,11 @@
 import { categories } from "../data/categories";
 import type { DraftExpense, Value } from "../types";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import DatePicker from 'react-date-picker';
 import 'react-date-picker/dist/DatePicker.css';
 import 'react-calendar/dist/Calendar.css';
+import ErrorMessage from "./ErrorMessage";
+import { useBudget } from "../hooks/useBudget";
 
 export default function ExpenseForm() {
 
@@ -14,14 +16,16 @@ export default function ExpenseForm() {
         date: new Date()
     })
 
+    const [error, setError] = useState("")
+    const { dispatch } = useBudget()
+
     //AMOUNT - EXPENSENAME - CATEGORY
     const handleChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
         const { name, value } = e.target
         const isAmountField = ["amount"].includes(name) //detect when writes in amount, returns a boolean
-
         setExpense({
             ...expense,
-            [name]: isAmountField ? +value : value
+            [name]: isAmountField ? +value : value //see this value.trim() later
         })
     }
 
@@ -33,13 +37,38 @@ export default function ExpenseForm() {
             date: value,
         })
     }
+
+    //ON SUBMIT FORM
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        //Validate data input
+        if (Object.values(expense).includes("")) {
+            setError("Falta rellenar campos...")
+            return
+        }
+
+        //Add new expense
+        dispatch({ type: "add-expense", payload: { expense } })
+
+        //Reset form after add new expense
+        setExpense({
+            amount: 0,
+            expenseName: "",
+            category: "",
+            date: new Date()
+        })
+
+    }
+
     return (
-        <form className="space-y-5">
+        <form className="space-y-5" onSubmit={handleSubmit}>
             <legend
                 className="uppercase text-center text-2xl font-black border-b-4 border-blue-500 py-2"
             >
                 Nuevo gasto
             </legend>
+
+            {error && <ErrorMessage>{error}</ErrorMessage>}
             <div className="flex flex-col gap-2">
                 <label
                     htmlFor="expenseName"
