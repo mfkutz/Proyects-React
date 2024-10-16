@@ -17,9 +17,9 @@ This is a simple and efficient application for tracking your daily expenses. The
 
 Here are some screenshots of the app:
 
-![Home Page](./home.png)
-![Expense List](./list1.png)
-![Expense List](./list2.png)
+![Home Page](public/home.png)
+![Expense List](public/list1.png)
+![Expense List](public/list2.png)
 ![Expense List](public/form.png)
 
 ## Dependencies
