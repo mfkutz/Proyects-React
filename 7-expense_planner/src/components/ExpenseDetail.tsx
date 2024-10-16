@@ -10,6 +10,7 @@ import { formatDate } from "../helpers"
 import { Expense } from "../types"
 import AmountDisplay from "./AmountDisplay"
 import { categories } from "../data/categories"
+import { useBudget } from "../hooks/useBudget"
 import 'react-swipeable-list/dist/styles.css';
 
 type ExpenseDetailProps = {
@@ -19,22 +20,25 @@ type ExpenseDetailProps = {
 export default function ExpenseDetail({ expense }: ExpenseDetailProps) {
 
     const categoryInfo = useMemo(() => categories.filter(cat => cat.id === expense.category)[0], [expense]) //access to "db" for icons and info
+    const { dispatch } = useBudget()
+    const { id } = expense
 
+    //Upgrade expense (animation)
     const leadingActions = () => (
         <LeadingActions>
             <SwipeAction
-                onClick={() => { }}
+                onClick={() => dispatch({ type: "get-expense-by-id", payload: { id } })}
             >
                 Actualizar
             </SwipeAction>
         </LeadingActions>
     )
 
-    //Delete animation
+    //Delete expense (animation)
     const trailingActions = () => (
         <TrailingActions>
             <SwipeAction
-                onClick={() => { }}
+                onClick={() => dispatch({ type: "remove-expense", payload: { id } })}
                 destructive={true}
             >
                 Eliminar
@@ -45,7 +49,7 @@ export default function ExpenseDetail({ expense }: ExpenseDetailProps) {
     return (
         <SwipeableList>
             <SwipeableListItem
-                maxSwipe={30}
+                maxSwipe={1}
                 leadingActions={leadingActions()}
                 trailingActions={trailingActions()}
             >
