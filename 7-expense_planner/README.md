@@ -20,6 +20,7 @@ Here are some screenshots of the app:
 ![Home Page](./home.png)
 ![Expense List](./list1.png)
 ![Expense List](./list2.png)
+![Expense List](public/form.png)
 
 ## Dependencies
 
