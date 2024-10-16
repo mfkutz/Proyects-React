@@ -1,50 +1,37 @@
-# React + TypeScript + Vite
+https://musical-valkyrie-340301.netlify.app/
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Daily Expense Tracker
 
-Currently, two official plugins are available:
+This is a simple and efficient application for tracking your daily expenses. The app is built with **React** and uses **useReducer** and **Context API** for state management. It stores data locally using **localStorage**, so your expenses persist even after you close the app. The app also includes a **custom hook** to easily access the context where needed.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- **Track daily expenses**: Add, edit, and delete your expenses.
+- **Persistent storage**: Expenses are saved in `localStorage`, so you don't lose your data on refresh.
+- **Calendar view**: Select dates for specific expenses.
+- **Progress bar**: Visualize your spending progress.
+- **Responsive and accessible**: Built with `@headlessui/react` and `@heroicons/react` for a clean UI.
+- **Custom hook**: Access the state via a custom hook that wraps around the Context API.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Screenshots
 
-- Configure the top-level `parserOptions` property like this:
+Here are some screenshots of the app:
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+![Home Page](./home.png)
+![Expense List](./list1.png)
+![Expense List](./list2.png)
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Dependencies
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+Here is a list of the main dependencies used in this project:
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+- **[@headlessui/react](https://headlessui.dev/)**: A set of completely unstyled, fully accessible UI components.
+- **[@heroicons/react](https://heroicons.com/)**: Beautiful hand-crafted SVG icons for your React projects.
+- **[prop-types](https://www.npmjs.com/package/prop-types)**: Typechecking for React props to ensure proper use of components.
+- **[react](https://reactjs.org/)**: A JavaScript library for building user interfaces.
+- **[react-calendar](https://www.npmjs.com/package/react-calendar)**: A customizable calendar component for React.
+- **[react-circular-progressbar](https://www.npmjs.com/package/react-circular-progressbar)**: A circular progress bar component for React.
+- **[react-date-picker](https://www.npmjs.com/package/react-date-picker)**: A date picker for selecting dates.
+- **[react-dom](https://www.npmjs.com/package/react-dom)**: React library for rendering components to the DOM.
+- **[react-swipeable-list](https://www.npmjs.com/package/react-swipeable-list)**: A swipeable list component for creating actions like deleting or editing items.
+- **[uuid](https://www.npmjs.com/package/uuid)**: A library for generating unique IDs, used to uniquely identify each expense.
