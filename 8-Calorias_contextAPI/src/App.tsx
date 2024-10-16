@@ -1,19 +1,20 @@
-import { useEffect, useMemo, useReducer } from "react"
+import { useEffect } from "react"
 import Form from "./components/Form"
-import { activityReducer, initialState } from "./reducers/activity-reducers"
 import ActivityList from "./components/ActivityList"
 import CalorieTracker from "./components/CalorieTracker"
+import { useActivity } from "./hooks/useActivity"
 
 
 function App() {
 
-  const [state, dispatch] = useReducer(activityReducer, initialState)
+  const { state, dispatch } = useActivity()
 
   useEffect(() => {
     localStorage.setItem("activities", JSON.stringify(state.activities))
   }, [state.activities])
 
-  const canRestartApp = () => useMemo(() => state.activities.length > 0, [state.activities])
+  const canRestartApp = state.activities.length > 0
+
 
   return (
     <>
@@ -25,7 +26,7 @@ function App() {
 
           <button
             className="bg-gray-800 hover:bg-gray-900 p-2 font-bold uppercase text-white cursor-pointer rounded-lg text-sm disabled:opacity-10"
-            disabled={!canRestartApp()}
+            disabled={!canRestartApp}
             onClick={() => dispatch({ type: "restart-app" })}
           >
             Reiniciar App
@@ -46,19 +47,13 @@ function App() {
 
       <section className="bg-gray-800 py-10">
         <div className="max-w-4xl mx-auto">
-          <CalorieTracker
-            activities={state.activities}
-          />
+          <CalorieTracker />
         </div>
 
       </section>
 
       <section className="p-10 mx-auto max-w-4xl">
-        <ActivityList
-          activities={state.activities}
-          dispatch={dispatch}
-
-        />
+        <ActivityList />
       </section>
     </>
   )
