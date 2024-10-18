@@ -4,7 +4,6 @@ import ActivityList from "./components/ActivityList"
 import CalorieTracker from "./components/CalorieTracker"
 import { useActivity } from "./hooks/useActivity"
 
-
 function App() {
 
   const { state, dispatch } = useActivity()
@@ -37,10 +36,7 @@ function App() {
 
       <section className="bg-lime-500 py-20 px-5">
         <div className="max-w-4xl mx-auto">
-          <Form
-            dispatch={dispatch}
-            state={state}
-          />
+          <Form />
         </div>
       </section>
 
