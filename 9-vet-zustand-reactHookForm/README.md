@@ -1,50 +1,22 @@
-# React + TypeScript + Vite
+https://poetic-squirrel-785041.netlify.app/
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# 🐾 Veterinary Appointment Booking App
 
-Currently, two official plugins are available:
+This is a React-based web application for scheduling veterinary consultations. Users can select a date and time for their pets' appointments, and the application provides a simple and efficient interface for managing these bookings.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![Home Page](public/print.png)
 
-## Expanding the ESLint configuration
+## 🌟 Features
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **Book Appointments**: Easy-to-use appointment booking form with validation.
+- **Appointment Management**: State management handled with **Zustand** and local storage for persistence.
+- **Form Validation**: Integrated with **react-hook-form** for seamless form validation.
+- **Notifications**: Real-time notifications using **react-toastify**.
+- **Unique IDs**: Appointment entries are assigned unique IDs using **uuid**.
 
-- Configure the top-level `parserOptions` property like this:
+## 🛠 Dependencies
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+- [`react-hook-form`](https://react-hook-form.com/) `^7.53.1`: Simplifies form handling and validation.
+- [`react-toastify`](https://fkhadra.github.io/react-toastify/) `^10.0.6`: Adds beautiful toast notifications for feedback.
+- [`uuid`](https://www.npmjs.com/package/uuid) `^10.0.0`: Generates unique IDs for appointments.
+- [`zustand`](https://github.com/pmndrs/zustand) `^5.0.0`: For lightweight and efficient state management with local storage.
