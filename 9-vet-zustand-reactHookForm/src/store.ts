@@ -42,13 +42,13 @@ export const usePatientStore = create<PatientState>()(
 
         //////////// FUNCTION 3 - GET /////////////
         getPatientById: (id) => {
-          console.log(id);
+          // console.log(id);
           set(() => ({
             activeId: id,
           }));
         },
 
-        //////////// FUNCTION 3 - UPDATE DATA /////////////
+        //////////// FUNCTION 4 - UPDATE DATA /////////////
         updatePatient: (data) => {
           set((state) => ({
             patients: state.patients.map((patient) =>
