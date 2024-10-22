@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/main.tsx","./src/vite-env.d.ts","./src/alert/alert.tsx","./src/form/form.tsx","./src/spinner/spinner.tsx","./src/weatherdetail/weatherdetail.tsx","./src/data/country.ts","./src/hooks/useweather.ts","./src/types/index.ts","./src/utils/index.ts"],"version":"5.6.3"}
