@@ -7,7 +7,7 @@ This is a weather application that allows you to check the weather of different 
 ## 🚀 Features
 
 - Get the current weather for any city or country.
-- Information on temperature, humidity, wind speed, and more.
+- Information on temperature.
 - Input validation to ensure correct city and country search.
 - Simple and user-friendly design.
 
