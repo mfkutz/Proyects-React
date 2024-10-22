@@ -1,9 +1,12 @@
+import Alert from "./Alert/Alert"
 import styles from "./App.module.css"
 import Form from "./Form/Form"
 import useWeather from "./hooks/useWeather"
+import Spinner from "./Spinner/Spinner"
+import WeatherDetail from "./WeatherDetail/WeatherDetail"
 
 function App() {
-  const { fetchWeather } = useWeather()
+  const { weather, loading, notFound, fetchWeather, hasWeatherData } = useWeather()
 
   // console.log(import.meta.env)
 
@@ -14,7 +17,9 @@ function App() {
         <Form
           fetchWeather={fetchWeather}
         />
-        <p>2</p>
+        {loading && <Spinner />}
+        {hasWeatherData && <WeatherDetail weather={weather} />}
+        {notFound && <Alert>Ciudad no encontrada</Alert>}
       </div>
     </>
   )
