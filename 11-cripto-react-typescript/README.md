@@ -1,50 +1,22 @@
-# React + TypeScript + Vite
+https://remarkable-hummingbird-d11e5d.netlify.app/
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# 📈 Crypto Quote - Real-time Cryptocurrency Price App
 
-Currently, two official plugins are available:
+![Project Screenshot](./public/home.png) <!-- Replace with the actual path to your image -->
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Crypto Quote is a React-based app that provides real-time cryptocurrency prices. Simply select a fiat currency and a cryptocurrency, and view the latest price, along with daily price fluctuations and trends.
 
-## Expanding the ESLint configuration
+## 🌟 Features
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **Currency and Crypto Selection:** Choose from a range of fiat and cryptocurrency options.
+- **Real-Time Pricing:** See the current price instantly.
+- **Daily Price Fluctuation:** Monitor daily high and low variations for selected cryptocurrencies.
+- **User-Friendly Interface:** Clear and intuitive design for seamless crypto tracking.
 
-- Configure the top-level `parserOptions` property like this:
+## 🛠️ Technologies used
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+- **Axios**: To handle HTTP requests.
+- **Zod**: For input data validation to ensure correct information.
+- **Zustand**: For managing application state efficiently.
+- **React (with Vite)**: Frontend framework with high performance.
+- **TypeScript**: Provides type safety, making the app more robust and easier to maintain.
