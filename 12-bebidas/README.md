@@ -1,50 +1,45 @@
-# React + TypeScript + Vite
+https://silly-torrone-276e56.netlify.app/
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# 🍹 Cocktail Recipe Finder
 
-Currently, two official plugins are available:
+Welcome to **Cocktail Recipe Finder**, a React-based web app that helps you discover a wide range of cocktail recipes. This app leverages the [TheCocktailDB API](https://www.thecocktaildb.com/api.php) to provide detailed cocktail information, including ingredients and preparation steps, making it easier to find the perfect drink for any occasion!
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Features
 
-## Expanding the ESLint configuration
+- **Search by cocktail name** - Easily look up any cocktail you have in mind.
+- **Ingredient details** - View all ingredients and their measurements.
+- **Favorites** - Save your favorite recipes.
+- **Responsive design** - Enjoy the app on any device, optimized for both mobile and desktop use.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## 🚀 Tech Stack
 
-- Configure the top-level `parserOptions` property like this:
+The app is built with:
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+- **React 18** for building a fast, responsive user interface.
+- **Zustand** for state management, simplifying the data flow.
+- **React Router DOM** for seamless navigation.
+- **Axios** for making API requests to TheCocktailDB.
+- **Zod** for schema validation, ensuring data consistency.
+- **Headless UI** and **Heroicons** for accessible and visually pleasing UI components.
+
+## 📦 Dependencies
+
+Here is a list of main dependencies used in the project:
+
+```json
+{
+  "@headlessui/react": "^2.2.0",
+  "@heroicons/react": "^2.1.5",
+  "axios": "^1.7.7",
+  "react": "^18.3.1",
+  "react-dom": "^18.3.1",
+  "react-router-dom": "^6.27.0",
+  "zod": "^3.23.8",
+  "zustand": "^5.0.0"
+}
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+![Project Screenshot](./public/1.png)
+![Project Screenshot](./public/2.png)
+![Project Screenshot](./public/3.png)
+![Project Screenshot](./public/4.png)
