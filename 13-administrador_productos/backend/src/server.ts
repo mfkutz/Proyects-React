@@ -19,7 +19,14 @@ connectDB();
 
 const server = express();
 
+//leer datos de formularios (middleware)
+server.use(express.json());
+// server.use(express.urlencoded({ extended: true }));
+
 //Route
-server.use("/products", router);
+server.use("/api/products", router);
+server.use((req, res) => {
+  res.json("URL NO Entontrada");
+});
 
 export default server;
