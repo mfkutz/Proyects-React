@@ -132,4 +132,33 @@ describe("PUT /api/products/:id", () => {
     expect(response.status).not.toBe(200);
     expect(response.body).not.toHaveProperty("data");
   });
+
+  it("should return a 404 response for a non-existent product ", async () => {
+    const productId = 2000;
+    const response = await request(server).put(`/api/products/${productId}`).send({
+      name: "Monitor actualizado 2",
+      price: 350,
+      availability: "true",
+    });
+
+    expect(response.status).toBe(404);
+    expect(response.body.error).toBe("Producto no entontrado");
+
+    expect(response.status).not.toBe(200);
+    expect(response.body).not.toHaveProperty("data");
+  });
+
+  it("should update an existing product with valid data ", async () => {
+    const response = await request(server).put(`/api/products/1`).send({
+      name: "Monitor actualizado 2",
+      price: 350,
+      availability: "true",
+    });
+
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty("Product");
+
+    expect(response.status).not.toBe(400);
+    expect(response.body).not.toHaveProperty("errors");
+  });
 });
