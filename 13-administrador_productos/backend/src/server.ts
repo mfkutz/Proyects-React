@@ -1,5 +1,9 @@
 import express from "express";
 import colors from "colors";
+import cors, { CorsOptions } from "cors";
+import morgan from "morgan";
+import swaggerUi from "swagger-ui-express";
+import swaggerSpec from "./config/swagger";
 import router from "./router";
 import db from "./config/db";
 
@@ -17,11 +21,33 @@ export async function connectDB() {
 
 connectDB();
 
+//Instancia de express
 const server = express();
+
+//Permitir conexiones
+const corsOptions: CorsOptions = {
+  origin: function (origin, callback) {
+    // console.log(origin);
+    if (origin === process.env.FRONTEND_URL) {
+      callback(null, true);
+    } else {
+      // console.log("Denegar...");
+      callback(new Error("CORS Error"));
+    }
+  },
+};
+
+server.use(cors(corsOptions));
 
 //leer datos de formularios (middleware)
 server.use(express.json());
 // server.use(express.urlencoded({ extended: true }));
+
+//morgan
+server.use(morgan("dev"));
+
+//Docs
+server.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 //Route
 server.use("/api/products", router);
