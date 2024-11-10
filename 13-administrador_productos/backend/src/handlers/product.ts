@@ -5,7 +5,7 @@ import color from "colors";
 export const getProduct = async (req: Request, res: Response) => {
   try {
     const products = await Product.findAll({
-      order: [["price", "ASC"]],
+      order: [["id", "ASC"]],
       // attributes: { exclude: ["updatedAt", "availability"] }, //Can restrict some parameters in the call, passwords for example
     });
     res.json({ data: products });
