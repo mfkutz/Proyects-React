@@ -39,16 +39,23 @@ router.delete(
 );
 
 //Routes for tasks
+router.param("projectId", validateProjectExists); // the routes use" validateProjectExists", can by deleted from routes
+
 router.post(
   "/:projectId/task",
-  validateProjectExists,
-
   body("name").notEmpty().withMessage("El nombre de la tarea es Obligatorio"),
   body("description").notEmpty().withMessage("La description de la tarea es Obligatoria"),
   handleInputErrors,
   TaskController.createTask
 );
 
-router.get("/:projectId/task", validateProjectExists, TaskController.getProjectTasks);
+router.get("/:projectId/task", TaskController.getProjectTasks);
+
+router.get(
+  "/:projectId/task/:taskId",
+  param("taskId").isMongoId().withMessage("ID no válido"),
+  handleInputErrors,
+  TaskController.getTaskById
+);
 
 export default router;
