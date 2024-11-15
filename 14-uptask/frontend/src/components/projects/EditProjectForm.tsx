@@ -2,7 +2,7 @@ import { Project, ProjectFormData } from "@/types/index";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import ProjectForm from "./ProjectForm";
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { updateProject } from "@/api/ProjectAPI";
 import { toast } from "react-toastify";
 
@@ -23,12 +23,17 @@ export default function EditProjectForm({ data, projectId }: EditProjectFormProp
         }
     })
 
+    const queryClient = useQueryClient()
     const { mutate } = useMutation({
         mutationFn: updateProject,
         onError: (error) => {
             toast.error(error.message)
         },
         onSuccess: (data) => {
+            // Invalidate the 'projects' query cache to ensure the project list is fetched again from the server
+            // This guarantees the UI reflects the latest changes made by the mutation
+            queryClient.invalidateQueries({ queryKey: ['projects'] })
+            queryClient.invalidateQueries({ queryKey: ['editProject', projectId] })
             toast.success(data)
             navigate("/")
         }
