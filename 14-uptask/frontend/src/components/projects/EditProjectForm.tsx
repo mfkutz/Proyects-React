@@ -1,25 +1,30 @@
-
-import { Link, useNavigate } from "react-router-dom"
-import { useForm } from "react-hook-form"
+import { Project, ProjectFormData } from "@/types/index";
+import { useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
+import ProjectForm from "./ProjectForm";
 import { useMutation } from "@tanstack/react-query"
-import { toast } from "react-toastify"
-import ProjectForm from "@/components/projects/ProjectForm"
-import { ProjectFormData } from "@/types/index"
-import { createProject } from "@/api/ProjectAPI"
+import { updateProject } from "@/api/ProjectAPI";
+import { toast } from "react-toastify";
 
-export default function CreateProjectView() {
+type EditProjectFormProps = {
+    data: ProjectFormData
+    projectId: Project["_id"]
+}
+
+export default function EditProjectForm({ data, projectId }: EditProjectFormProps) {
 
     const navigate = useNavigate()
 
-    const initialValues: ProjectFormData = {
-        projectName: "",
-        clientName: "",
-        description: ""
-    }
-    const { register, handleSubmit, formState: { errors } } = useForm({ defaultValues: initialValues })
+    const { register, handleSubmit, formState: { errors } } = useForm({
+        defaultValues: {
+            projectName: data.projectName,
+            clientName: data.clientName,
+            description: data.description
+        }
+    })
 
     const { mutate } = useMutation({
-        mutationFn: createProject,
+        mutationFn: updateProject,
         onError: (error) => {
             toast.error(error.message)
         },
@@ -29,15 +34,20 @@ export default function CreateProjectView() {
         }
     })
 
-    const handleForm = async (formData: ProjectFormData) => mutate(formData)
-
+    const handleForm = (formData: ProjectFormData) => {
+        const data = {
+            formData,
+            projectId
+        }
+        mutate(data)
+    }
 
     return (
         <>
             <div className="max-w-3xl mx-auto">
 
-                <h1 className="text-5xl font-black">Crear Proyecto</h1>
-                <p className="text-2xl font-light text-gray-500 mt-2">LLena el siguiente formulario para crear un proyecto</p>
+                <h1 className="text-5xl font-black">Editar Proyecto</h1>
+                <p className="text-2xl font-light text-gray-500 mt-2">LLena el siguiente formulario para editar el proyecto</p>
 
                 <nav className="my-5">
                     <Link
@@ -59,7 +69,7 @@ export default function CreateProjectView() {
                     />
                     <input
                         type="submit"
-                        value="Crear Proyecto"
+                        value="Guardar Cambios"
                         className="bg-fuchsia-600 hover:bg-fuchsia-700 w-full p-3 text-white uppercase font-bold cursor-pointer transition-colors"
 
                     />
