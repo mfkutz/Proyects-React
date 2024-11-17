@@ -4,6 +4,7 @@ import { getProjectById } from "@/api/ProjectAPI"
 import AddTaskModal from "@/components/tasks/AddTaskModal"
 import TaskList from "@/components/tasks/TaskList"
 import EditTaskData from "@/components/tasks/EditTaskData"
+import TaskModalDetails from "@/components/tasks/TaskModalDetails"
 
 export default function ProjectDetailsView() {
     const navigate = useNavigate()
@@ -11,10 +12,11 @@ export default function ProjectDetailsView() {
     const projectId = params.projectId!
 
     const { data, isLoading, isError } = useQuery({
-        queryKey: ['editProject', projectId], //debe ser único
+        queryKey: ['project', projectId], //debe ser único
         queryFn: () => getProjectById(projectId)
     })
     // console.log('here location pathname', location.pathname)
+
     if (isLoading) return "Cargando..."
     if (isError) return <Navigate to="/404" />
     if (data) return (
@@ -32,10 +34,10 @@ export default function ProjectDetailsView() {
             </nav>
             <TaskList
                 tasks={data.tasks}
-
             />
             <AddTaskModal />
             <EditTaskData />
+            <TaskModalDetails />
         </>
     )
 }

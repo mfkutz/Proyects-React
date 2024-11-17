@@ -1,9 +1,11 @@
+import { Fragment } from "react"
 import { Task } from "@/types/index"
 import { Menu, Transition } from "@headlessui/react"
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid"
-import { Fragment } from "react"
-import { useNavigate } from "react-router-dom"
-
+import { useNavigate, useParams } from "react-router-dom"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { deleteTask } from "@/api/TaskAPI"
+import { toast } from "react-toastify"
 
 type TaskCardProps = {
     task: Task
@@ -12,6 +14,22 @@ type TaskCardProps = {
 export default function TaskCard({ task }: TaskCardProps) {
     //adding path to url (needed on editTaskData)
     const navigate = useNavigate()
+
+    const params = useParams()
+    const projectId = params.projectId!
+
+
+    const queryClient = useQueryClient()
+    const { mutate } = useMutation({
+        mutationFn: deleteTask,
+        onError: (error) => {
+            toast.error(error.message)
+        },
+        onSuccess: (data) => {
+            toast.success(data)
+            queryClient.invalidateQueries({ queryKey: ["project", projectId] })
+        }
+    })
 
     return (
         <li className="p-5 bg-white border border-slate-300 flex justify-between gap-3">
@@ -37,7 +55,11 @@ export default function TaskCard({ task }: TaskCardProps) {
                         <Menu.Items
                             className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
                             <Menu.Item>
-                                <button type='button' className='block px-3 py-1 text-sm leading-6 text-gray-900'>
+                                <button
+                                    type='button'
+                                    className='block px-3 py-1 text-sm leading-6 text-gray-900'
+                                    onClick={() => navigate(location.pathname + `?viewTask=${task._id}`)}
+                                >
                                     Ver Tarea
                                 </button>
                             </Menu.Item>
@@ -52,7 +74,11 @@ export default function TaskCard({ task }: TaskCardProps) {
                             </Menu.Item>
 
                             <Menu.Item>
-                                <button type='button' className='block px-3 py-1 text-sm leading-6 text-red-500'>
+                                <button
+                                    type='button'
+                                    className='block px-3 py-1 text-sm leading-6 text-red-500'
+                                    onClick={() => mutate({ projectId, taskId: task._id })}
+                                >
                                     Eliminar Tarea
                                 </button>
                             </Menu.Item>
