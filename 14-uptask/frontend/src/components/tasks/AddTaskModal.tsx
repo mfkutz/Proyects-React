@@ -1,29 +1,56 @@
 import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useForm } from "react-hook-form"
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import TaskForm from './TaskForm';
 import { TaskFormData } from '@/types/index';
+import { createTask } from '@/api/TaskAPI';
+import { toast } from 'react-toastify';
 
 export default function AddTaskModal() {
 
-
     const navigate = useNavigate()
 
+    //Read if modal exist
     const location = useLocation() //read url
     const queryParams = new URLSearchParams(location.search)
     const modalTask = queryParams.get('newTask')
-    // console.log('location', location)
-    // console.log('query params', queryParams)
-    // console.log('modalTask', modalTask)
     const show = modalTask ? true : false
+
+    //Obtain projectId
+    const params = useParams()
+    const projectId = params.projectId!
 
     const initialValues: TaskFormData = {
         name: "",
         description: ""
     }
 
-    const { register, handleSubmit, formState: { errors } } = useForm({ defaultValues: initialValues })
+    const { register, handleSubmit, reset, formState: { errors } } = useForm({ defaultValues: initialValues })
+
+    const queryClient = useQueryClient()
+
+    const { mutate } = useMutation({
+
+        mutationFn: createTask,
+        onError: (error) => {
+            toast.error(error.message)
+        },
+        onSuccess: (data) => {
+            queryClient.invalidateQueries({ queryKey: ["editProject", projectId] })
+            toast.success(data)
+            reset() //reset the form
+            navigate(location.pathname, { replace: true })
+        }
+    })
+
+    const handleCreateTask = (formData: TaskFormData) => {
+        const data = {
+            formData, projectId
+        }
+        mutate(data)
+    }
 
     return (
         <>
@@ -65,6 +92,7 @@ export default function AddTaskModal() {
                                     </p>
                                     <form
                                         className='mt-10 space-y-3'
+                                        onSubmit={handleSubmit(handleCreateTask)}
                                         noValidate
                                     >
 
