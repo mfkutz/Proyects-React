@@ -8,9 +8,7 @@ const router = Router();
 router.post(
   "/create-account",
   body("name").notEmpty().withMessage("El nombre no puede ir vacío"),
-  body("password")
-    .isLength({ min: 8 })
-    .withMessage("El password debe tener como mínimo 8 caracteres"),
+  body("password").isLength({ min: 8 }).withMessage("El password debe tener como mínimo 8 caracteres"),
   body("password_confirmation").custom((value, { req }) => {
     if (value !== req.body.password) {
       throw new Error("Los Passwords no son iguales");
@@ -35,6 +33,20 @@ router.post(
   body("password").notEmpty().withMessage("El password no puede ir vacío"),
   handleInputErrors,
   AuthController.login
+);
+
+router.post(
+  "/request-code",
+  body("email").isEmail().withMessage("E-mail no válido"),
+  handleInputErrors,
+  AuthController.requestConfirmationCode
+);
+
+router.post(
+  "/forgot-password",
+  body("email").isEmail().withMessage("E-mail no válido"),
+  handleInputErrors,
+  AuthController.forgotPassword
 );
 
 export default router;
