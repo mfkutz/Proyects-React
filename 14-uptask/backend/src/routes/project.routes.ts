@@ -5,8 +5,11 @@ import { TaskController } from "../controllers/Task.controller";
 import { handleInputErrors } from "../middlewares/validation";
 import { projectExists } from "../middlewares/project";
 import { taskBelongsToProject, taskExists } from "../middlewares/task";
+import { authenticate } from "../middlewares/auth";
 
 const router = Router();
+
+router.use(authenticate)
 
 router.post(
   "/",
@@ -16,13 +19,16 @@ router.post(
   handleInputErrors,
   ProjectController.createProject
 );
+
 router.get("/", ProjectController.getAllProjects);
+
 router.get(
   "/:id",
   param("id").isMongoId().withMessage("ID no válido"),
   handleInputErrors,
   ProjectController.getProjectById
 );
+
 router.put(
   "/:id",
   param("id").isMongoId().withMessage("ID no válido"),
@@ -32,6 +38,7 @@ router.put(
   handleInputErrors,
   ProjectController.updateProject
 );
+
 router.delete(
   "/:id",
   param("id").isMongoId().withMessage("ID no válido"),

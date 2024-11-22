@@ -4,6 +4,10 @@ import Project from "../models/Project";
 export class ProjectController {
   static createProject = async (req: Request, res: Response) => {
     const project = new Project(req.body);
+
+    //Assing manager
+    project.manager = req.recover_user.id
+
     try {
       await project.save();
       res.send("Proyecto creado correctamente");
@@ -14,7 +18,11 @@ export class ProjectController {
 
   static getAllProjects = async (req: Request, res: Response) => {
     try {
-      const projects = await Project.find({});
+      const projects = await Project.find({
+        $or: [
+          { manager: { $in: req.recover_user.id } }
+        ]
+      });
       res.json(projects);
     } catch (error) {
       console.log(error);
@@ -30,6 +38,14 @@ export class ProjectController {
         res.status(404).json({ error: error.message });
         return;
       }
+
+      //Restrict only owners
+      if (project.manager.toString() !== req.recover_user.id.toString()) {
+        const error = new Error("Acción no válida");
+        res.status(404).json({ error: error.message });
+        return;
+      }
+
       res.json(project);
     } catch (error) {
       console.log(error);
