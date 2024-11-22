@@ -62,6 +62,13 @@ export class ProjectController {
         return;
       }
 
+      //Restrict only owners
+      if (project.manager.toString() !== req.recover_user.id.toString()) {
+        const error = new Error("Solo el Manager puede actualizar un Proyecto");
+        res.status(404).json({ error: error.message });
+        return;
+      }
+
       project.clientName = req.body.clientName;
       project.projectName = req.body.projectName;
       project.description = req.body.description;
@@ -79,6 +86,12 @@ export class ProjectController {
       const project = await Project.findById(id);
       if (!project) {
         const error = new Error("Proyecto no encontrado");
+        res.status(404).json({ error: error.message });
+        return;
+      }
+      //Restrict only owners
+      if (project.manager.toString() !== req.recover_user.id.toString()) {
+        const error = new Error("Solo el Manager puede eliminar un Proyecto");
         res.status(404).json({ error: error.message });
         return;
       }
