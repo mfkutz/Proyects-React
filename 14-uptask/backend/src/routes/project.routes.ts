@@ -6,6 +6,7 @@ import { handleInputErrors } from "../middlewares/validation";
 import { projectExists } from "../middlewares/project";
 import { taskBelongsToProject, taskExists } from "../middlewares/task";
 import { authenticate } from "../middlewares/auth";
+import { TeamMemberController } from "../controllers/TeamController";
 
 const router = Router();
 
@@ -47,7 +48,8 @@ router.delete(
 );
 
 //Routes for tasks
-router.param("projectId", projectExists); // the routes use" validateProjectExists", can by deleted from routes
+//Parametric Middleware
+router.param("projectId", projectExists);
 
 router.post(
   "/:projectId/task",
@@ -91,5 +93,30 @@ router.post(
   handleInputErrors,
   TaskController.updateStatus
 );
+
+/**  Routes for teams */
+router.post("/:projectId/team/find",
+  body("email").isEmail().toLowerCase().withMessage("E-mail no válido"),
+  handleInputErrors,
+  TeamMemberController.findMemberByEmail
+)
+
+router.get("/:projectId/team",
+  TeamMemberController.getProjectTeam
+)
+
+router.post("/:projectId/team",
+  body("id").isMongoId().withMessage("ID No Válido"),
+  handleInputErrors,
+  TeamMemberController.addMemberById
+)
+
+router.delete("/:projectId/team",
+  body("id").isMongoId().withMessage("ID No Válido"),
+  handleInputErrors,
+  TeamMemberController.removeMemberById
+)
+
+
 
 export default router;
