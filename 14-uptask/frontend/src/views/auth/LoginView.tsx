@@ -17,7 +17,6 @@ export default function LoginView() {
 
     //Redirect to dashboard when user is logged in
     const navigate = useNavigate()
-
     //Mutation
     const { mutate } = useMutation({
         mutationFn: authenticateUser,

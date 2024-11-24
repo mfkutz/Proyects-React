@@ -35,3 +35,13 @@ export function taskBelongsToProject(req: Request, res: Response, next: NextFunc
   }
   next();
 }
+
+//restricting colaborator to create, update and delete task
+export function hasAutorization(req: Request, res: Response, next: NextFunction) {
+  if (req.recover_user.id.toString() !== req.project.manager.toString()) {
+    const error = new Error("Acción no válida");
+    res.status(400).json({ error: error.message });
+    return;
+  }
+  next();
+}

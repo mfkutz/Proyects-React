@@ -5,6 +5,8 @@ export const useAuth = () => {
     const { data, isError, isLoading } = useQuery({
         queryKey: ['user'],
         queryFn: getUser,
+        // initialData: null, // Limpia datos previos
+        // enabled: !!localStorage.getItem('AUTH_TOKEN'),
         retry: 1,
         refetchOnWindowFocus: false
     })

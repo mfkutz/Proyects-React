@@ -26,7 +26,6 @@ export default function NewPasswordToken({ token, setToken, setValidToken }: New
     })
 
     const handleChange = (token: ConfirmToken["token"]) => {
-        console.log(token)
         setToken(token)
     }
 

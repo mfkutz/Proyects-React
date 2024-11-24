@@ -20,7 +20,8 @@ export class ProjectController {
     try {
       const projects = await Project.find({
         $or: [
-          { manager: { $in: req.recover_user.id } }
+          { manager: { $in: req.recover_user.id } },
+          { team: { $in: req.recover_user.id } }
         ]
       });
       res.json(projects);
@@ -40,7 +41,7 @@ export class ProjectController {
       }
 
       //Restrict only owners
-      if (project.manager.toString() !== req.recover_user.id.toString()) {
+      if (project.manager.toString() !== req.recover_user.id.toString() && !project.team.includes(req.recover_user.id)) {
         const error = new Error("Acción no válida");
         res.status(404).json({ error: error.message });
         return;

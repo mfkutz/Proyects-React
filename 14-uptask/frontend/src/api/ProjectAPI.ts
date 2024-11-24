@@ -17,6 +17,7 @@ export async function getProjects() {
 
   try {
     const { data } = await api("/projects");
+    //filter data with zod in types
     const response = dashboardProjectSchema.safeParse(data);
     if (response.success) {
       return response.data;
