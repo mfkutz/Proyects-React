@@ -13,7 +13,6 @@ export default function NotesPanel({ notes }: NotesPanelProps) {
             <div
                 className="divide-y divide-gray-100 mt-10"
             >
-                <div>Estoy aqui en NotesPanel.tsx</div>
                 {notes.length ? (
 
                     <>

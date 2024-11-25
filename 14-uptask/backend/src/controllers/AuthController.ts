@@ -229,7 +229,62 @@ export class AuthController {
     res.json(req.recover_user)
     return
   };
-}
 
+  static updateProfile = async (req: Request, res: Response) => {
+    const { name, email } = req.body
+
+    const userExists = await User.findOne({ email })
+
+    if (userExists && userExists.id.toString() !== req.recover_user.id.toString()) {
+      const error = new Error('Ese e-mail ya está registrado')
+      res.status(409).send({ error: error.message })
+      return
+    }
+
+    req.recover_user.name = name
+    req.recover_user.email = email
+    try {
+      await req.recover_user.save()
+      res.send('Perfil actualizado correctamente')
+    } catch (error) {
+      res.status(500).send('Hubo un error')
+    }
+  }
+
+  static updateCurrentUserPassword = async (req: Request, res: Response) => {
+    const { current_password, password } = req.body
+    const user = await User.findById(req.recover_user.id)
+    const isPasswordCorrect = await checkPassword(current_password, user.password)
+
+    if (!isPasswordCorrect) {
+      const error = new Error('El Password actual es incorrecto')
+      res.status(401).send({ error: error.message })
+      return
+    }
+
+    try {
+      user.password = await hashPassword(password)
+      await user.save()
+      res.send('El Password se modificó correctamente')
+    } catch (error) {
+      res.status(500).send('Hubo un error')
+    }
+  }
+
+  static checkPassword = async (req: Request, res: Response) => {
+    const { password } = req.body
+    const user = await User.findById(req.recover_user.id)
+    const isPasswordCorrect = await checkPassword(password, user.password)
+
+    if (!isPasswordCorrect) {
+      const error = new Error('El Password es incorrecto')
+      res.status(401).send({ error: error.message })
+      return
+    }
+
+    res.send('Password Correcto')
+  }
+
+}
 
 

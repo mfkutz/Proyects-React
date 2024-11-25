@@ -129,7 +129,6 @@ export default function TaskModalDetails() {
                                             ))}
                                         </select>
                                     </div>
-                                    <div>Estoy aqui en taskModelDetail</div>
                                     <NotesPanel
                                         notes={data.notes}
                                     />
