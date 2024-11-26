@@ -5,7 +5,13 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import './index.css'
 import Router from './router'
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 0
+    }
+  }
+})
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

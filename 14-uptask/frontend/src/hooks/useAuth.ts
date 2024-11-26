@@ -7,7 +7,7 @@ export const useAuth = () => {
         queryFn: getUser,
         // initialData: null, // Limpia datos previos
         // enabled: !!localStorage.getItem('AUTH_TOKEN'),
-        retry: 1,
+        retry: 0,
         refetchOnWindowFocus: false
     })
 
