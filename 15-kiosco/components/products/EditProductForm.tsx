@@ -1,12 +1,16 @@
 'use client'
 
-import { createProduct } from "@/actions/create-product-action"
+import { updateProduct } from "@/actions/update-product-action"
 import { ProductSchema } from "@/src/schema"
-import { useRouter } from "next/navigation"
+import { useParams, useRouter } from "next/navigation"
 import { toast } from "react-toastify"
 
-export default function AddProductForm({ children }: { children: React.ReactNode }) {
+export default function EditProductForm({ children }: { children: React.ReactNode }) {
     const router = useRouter()
+    const param = useParams()
+
+    console.log("Here param", param)
+    const id = +param.id!
 
     const handleSubmit = async (formData: FormData) => {
 
@@ -17,6 +21,8 @@ export default function AddProductForm({ children }: { children: React.ReactNode
             image: formData.get('image')
         }
 
+        console.log(data)
+
         const result = ProductSchema.safeParse(data)
 
         if (!result.success) {
@@ -26,7 +32,8 @@ export default function AddProductForm({ children }: { children: React.ReactNode
             return
         }
 
-        const response = await createProduct(result.data)
+
+        const response = await updateProduct(result.data, id)
 
         if (response?.errors) {
             response.errors.forEach(issue => {
@@ -34,7 +41,7 @@ export default function AddProductForm({ children }: { children: React.ReactNode
             })
             return
         }
-        toast.success("Producto creado correctamente")
+        toast.success("Producto actualizado correctamente")
         router.push('/admin/products')
     }
 
@@ -48,7 +55,7 @@ export default function AddProductForm({ children }: { children: React.ReactNode
 
                 <button
                     className="bg-indigo-600 hover:bg-indigo-800 text-white w-full mt-5 p-3 uppercase font-bold cursor-pointer text-center"
-                >Registrar Producto</button>
+                >Guardar Cambios</button>
             </form>
         </div>
     )
